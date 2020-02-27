@@ -18,87 +18,85 @@ class CartaController extends Controller
     
     public function index()
     {
-        $games = Game::all();
+        $cartas = Carta::all();
 
-        $title = 'Listado de juegos';
+        $title = 'Listado de cartas';
 
-        return view('games.index', compact('title', 'games'));
+        return view('cartas.index', compact('title', 'cartas'));
     }
 
-    public function show(Game $game)
+    public function show(Cartas $carta)
     {
-        return view('games.show', compact('game'));
+        return view('cartas.show', compact('carta'));
     }
 
     public function create()
     {
 
-        $companies = Company::all();
+        $ediciones = Edicione::all();
 
-        return view('games.create', compact('companies'));
+        return view('cartas.create', compact('ediciones'));
     }
 
     public function store()
     {
         $data = request()->validate([
-            'name' => ['required','unique:games,name'],
-            'genre' => 'required',
-            'platform' => 'required',
-            'company' => 'required',
-            'release' => ['required','regex:/^\d{4}$/'],
+            'nombre_carta' => ['required','unique:cartas,nombre_carta'],
+            'color' => 'required',
+            'tipo' => 'required',
+            'precio' => 'required',
+            
         ], [
-            'name.required' => 'El campo nombre es obligatorio',
-            'genre.required' => 'El campo genero es obligatorio',
-            'platform.required' => 'El campo plataforma es obligatorio',
-            'company.required' => 'El campo empresa es obligatorio',
-            'release.required' => 'El campo salida es obligatorio',
-            'name.unique' => 'El nombre del juego ya esta en uso',
-            'release.regex' => 'El formato del año no es el correcto'
+            'nombre_carta.required' => 'El campo nombre es obligatorio',
+            'color.required' => 'El campo color es obligatorio',
+            'tipo.required' => 'El campo tipo es obligatorio',
+            'precio.required' => 'El campo precio es obligatorio',
+            'nombre_carta.unique' => 'El nombre de la carta ya esta en uso',
+            
         ]);
 
         Game::create([
-            'name' => $data['name'],
-            'genre' => $data['genre'],
-            'platform' => $data['platform'],
-            'company' => $data['company'],
-            'release' => $data['release']
+            'nombre_carta' => $data['nombre_carta'],
+            'color' => $data['color'],
+            'tipo' => $data['tipo'],
+            'precio' => $data['precio'],
+            
         ]);
 
-        return redirect()->route('games.index');
+        return redirect()->route('cartas.index');
     }
 
-    public function edit(Game $game)
+    public function edit(Cartas $carta)
     {
-        $companies = Company::all();
+        $ediciones = Edicion::all();
 
-        return view('games.edit', ['game' => $game], compact('companies'));
+        return view('cartas.edit', ['carta' => $carta], compact('ediciones'));
     }
 
-    public function update(Game $game)
+    public function update(Carta $carta)
     {
         $data = request()->validate([
             'name' => 'required',
-            'genre' => 'required',
-            'platform' => 'required',
-            'company' => 'required',           
-            'release' => ['required','regex:/^\d{4}$/'],
+            'color' => 'required',
+            'tipo' => 'required',
+            'precio' => 'precio',           
+            
         ],[
             'name.required' => 'El campo nombre es obligatorio',
-            'genre.required' => 'El campo genero es obligatorio',
-            'platform.required' => 'El campo plataforma es obligatorio',
-            'company.required' => 'El campo empresa es obligatorio',
-            'release.required' => 'El campo salida es obligatorio',
-            'release.regex' => 'El formato del año no es el correcto'            
+            'color.required' => 'El campo color es obligatorio',
+            'tipo.required' => 'El campo tipo es obligatorio',
+            'precio.required' => 'El campo precio es obligatorio',
+                    
         ]);
 
-        $game->update($data);
+        $carta->update($data);
 
-        return redirect()->route('games.show', ['game' => $game]);
+        return redirect()->route('cartas.show', ['carta' => $carta]);
     }
 
-    function destroy(Game $game)
+    function destroy(Carta $carta)
     {
-        $game->delete();
+        $carta->delete();
 
         return redirect()->route('cartas.index');
     }

@@ -47,12 +47,12 @@ class EdicioneController extends Controller
             'tipo.required' => 'El campo tipo es obligatorio',
             'precio.required' => 'El campo precio es obligatorio',
             
-            'nombre_ediciones.unique' => 'El nombre de la empresa ya esta en uso',
+            'nombre_ediciones.unique' => 'El nombre de la edicion ya esta en uso',
             'color.unique' => 'El nombre de la color ya esta en uso',
            
             'color.regex' => 'El formato de la color no es el correcto',
             'tipo.regex' => 'El formato del tipo no es el correcto',
-            'precio.regex' => 'El formato del año de precio no es el correcto',
+            'precio.regex' => 'El formato del precio no es el correcto',
             
         ]);
 
@@ -76,7 +76,7 @@ class EdicioneController extends Controller
     {
         $data = request()->validate([
             'nombre_ediciones' => 'required',
-            'color' => ['required',Rule::unique('ediciones')->ignore($company->color),'regex:/^[A-Z0-9]{2}$/'],
+            'color' => ['required',Rule::unique('ediciones')->ignore($edicione->color),'regex:/^[A-Z0-9]{2}$/'],
             'tipo' => ['required','regex:/^[A-ZÑ][a-zñ]+( [A-ZÑ][a-zñ]+)*$/'],
             'precio' => ['required','regex:/^\d{4}$/'],
            
@@ -90,7 +90,7 @@ class EdicioneController extends Controller
            
             'color.regex' => 'El formato de la color no es el correcto',
             'tipo.regex' => 'El formato del tipo no es el correcto',
-            'precio.regex' => 'El formato del año de precio no es el correcto',
+            'precio.regex' => 'El formato  de precio no es el correcto',
            
         ]);
 
